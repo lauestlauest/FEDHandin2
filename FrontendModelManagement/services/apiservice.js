@@ -1,5 +1,7 @@
 let api_base_url = 'https://localhost:44368/api';
 
+//change to get token for where ever we save it
+
 export async function getData(endpoint,) {
   const config = {
     method: 'GET',
