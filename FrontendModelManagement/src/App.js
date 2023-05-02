@@ -5,14 +5,9 @@ import {
   Route,
   createRoutesFromElements,
 } from "react-router-dom";
-<<<<<<< HEAD
-//import { LoginView } from '../views/LoginView';
-//import { Managerview } from '../views/ManagerView';
-=======
 import LoginView from "./views/LoginView";
 // import { Managerview } from "./views/ManagerView";
 // import { ModelView } from "./views/ModelView";
->>>>>>> main
 
 // Needs protected routes when login is implemented
 const router = createBrowserRouter(
