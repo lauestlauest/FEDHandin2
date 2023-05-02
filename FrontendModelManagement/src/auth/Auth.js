@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
@@ -10,8 +10,10 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
+  // eslint-disable-next-line
+  const [currentUser, setCurrentUser] = useState(null);
 
-  useEffect(() => {
+  const value = useMemo(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
       const decodedToken = jwtDecode(token);
@@ -25,43 +27,68 @@ export function AuthProvider({ children }) {
         ],
         modelId: decodedToken["ModelId"],
       };
-      value.currentUser = user;
+
+      setCurrentUser(user);
+
+      return {
+        currentUser: user,
+        login: (token) => {
+          localStorage.setItem("jwt", token);
+          const decodedToken = jwtDecode(token);
+          const user = {
+            email:
+              decodedToken[
+                "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+              ],
+            role: decodedToken[
+              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            ],
+            modelId: decodedToken["ModelId"],
+          };
+          setCurrentUser(user);
+          localStorage.setItem("currentUser", JSON.stringify(user));
+        },
+        logout: () => {
+          localStorage.removeItem("jwt");
+          localStorage.removeItem("currentUser");
+          setCurrentUser(null);
+          navigate("/login");
+        },
+      };
     } else {
       navigate("/login");
+      return {
+        currentUser: null,
+        login: (token) => {
+          localStorage.setItem("jwt", token);
+          const decodedToken = jwtDecode(token);
+          const user = {
+            email:
+              decodedToken[
+                "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+              ],
+            role: decodedToken[
+              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            ],
+            modelId: decodedToken["ModelId"],
+          };
+          setCurrentUser(user);
+          localStorage.setItem("currentUser", JSON.stringify(user));
+        },
+        logout: () => {
+          localStorage.removeItem("jwt");
+          localStorage.removeItem("currentUser");
+          setCurrentUser(null);
+          navigate("/login");
+        },
+      };
     }
   }, [navigate]);
 
-  function login(token) {
-    localStorage.setItem("jwt", token);
-    const decodedToken = jwtDecode(token);
-    const user = {
-      email:
-        decodedToken[
-          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
-        ],
-      role: decodedToken[
-        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-      ],
-      modelId: decodedToken["ModelId"],
-    };
-
-    // Set the user data directly on the AuthContext value object
-    value.currentUser = user;
-
-    localStorage.setItem("currentUser", JSON.stringify(user));
-  }
-
-  function logout() {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("currentUser");
-    navigate("/login");
-  }
-
-  const value = {
-    currentUser: JSON.parse(localStorage.getItem("currentUser")),
-    login,
-    logout,
-  };
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    setCurrentUser(storedUser);
+  }, []);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
