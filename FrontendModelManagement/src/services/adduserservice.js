@@ -5,14 +5,14 @@ import {postData} from "../services/apiservice"
 // Add new models
 // Add new managers
 
-export function AddUserService(FirstName, Lastname, Email, Password, IsManager){
-  var user= {
-    firstName: {FirstName},
-    lastName: {Lastname},
-    email: {Email},
-    password: {Password}
-  }
-  return postData( postUrl(IsManager) ,user)
+export function AddUserService(body,  IsManager){
+  // var user= {
+  //   firstName: {FirstName},
+  //   lastName: {Lastname},
+  //   email: {Email},
+  //   password: {Password}
+  // }
+  return postData( postUrl(IsManager) , body)
 
 };
 

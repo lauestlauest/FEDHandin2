@@ -1,8 +1,8 @@
-let api_base_url = 'https://localhost:44368/api';
-
+let api_base_url = 'https://localhost:7181/api';
+let jwy = 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJib3NzQG0uZGsiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNYW5hZ2VyIiwiTW9kZWxJZCI6Ii0xIiwibmJmIjoiMTY4MzAyOTYzMSIsImV4cCI6IjE2ODMxMTYwMzEifQ.JpaTEjLfjWDJyZGwVnrq02WjtNk6dvIwUM3yyVN7mfQ'
 //change to get token for where ever we save it
 
-export async function getData(endpoint,) {
+export async function getData(endpoint) {
   const config = {
     method: 'GET',
     headers: {
@@ -14,12 +14,12 @@ export async function getData(endpoint,) {
   return doFetch(endpoint, config);
 }
 
-export async function postData(endpoint, body,) {
+export async function postData(endpoint, body) {
   const config = {
     method: 'POST',
     body: JSON.stringify(body),
     headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem("token"),
+      'Authorization': 'Bearer ' + jwy,
       'Content-Type': 'application/json',
     },
   }
