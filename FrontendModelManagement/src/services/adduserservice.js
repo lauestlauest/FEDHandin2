@@ -5,7 +5,7 @@ import {postData} from "../services/apiservice"
 // Add new models
 // Add new managers
 
-const AddUserService = (FirstName, Lastname, Email, Password, IsManager) => {
+export function AddUserService(FirstName, Lastname, Email, Password, IsManager){
   var user= {
     firstName: {FirstName},
     lastName: {Lastname},
@@ -23,4 +23,4 @@ const postUrl = (IsManager) => {
   return 'Models'
 }
 
-export default AddUserService;
+
