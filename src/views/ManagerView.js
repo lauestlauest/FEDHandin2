@@ -1,6 +1,4 @@
-import { useAuth } from "../auth/Auth";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import React from "react";
 
 // Needs:
 // List of all jobs
@@ -9,16 +7,7 @@ import { useEffect } from "react";
 // Delete model(s) component/view - checkbox with a button maybe
 // Create user component/view
 
-export default function ManagerView() {
-  const { currentUser } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!currentUser || currentUser.role !== "Manager") {
-      navigate("/login");
-    }
-  }, [currentUser, navigate]);
-
+const ManagerView = () => {
   return (
     <div>
       <h1>Welcome to ManagerView</h1>
@@ -28,4 +17,6 @@ export default function ManagerView() {
       </p>
     </div>
   );
-}
+};
+
+export default ManagerView;

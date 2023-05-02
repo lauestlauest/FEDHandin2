@@ -1,56 +1,58 @@
-import { React, useState } from "react";
-import { TextField, Button, Typography } from "@mui/material";
-import { handleLogin } from "./Login";
-import { LoginStyles } from "./LoginStyles";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/Auth";
 
-const LoginView = () => {
-  const classes = LoginStyles();
+async function authenticateUser(email, password) {
+  const response = await fetch("https://localhost:7181/api/Account/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
 
+  if (response.ok) {
+    const data = await response.json();
+    return data.jwt;
+  } else {
+    // Handle error (e.g., display error message)
+    return null;
+  }
+}
+
+export default function LoginView() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const onLoginClick = async () => {
-    try {
-      await handleLogin(email, password);
-      //redir based on user role
-    } catch (err) {
-      console.log(err.message);
-      throw err;
+  async function handleSubmit(e) {
+    e.preventDefault();
+    // Call your ASP.NET Core backend to authenticate the user and get the JWT token
+    const token = await authenticateUser(email, password);
+    if (token) {
+      login(token);
+      navigate("/"); // Navigate to the main page after successful login
+    } else {
+      // Show error message
     }
-  };
+  }
 
   return (
-    <div className={classes.root}>
-      <div className={classes.form}>
-        <Typography variant="h4" className={classes.header}>
-          Login
-        </Typography>
-        <TextField
-          className={classes.textField}
-          label="Email"
-          variant="outlined"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          className={classes.textField}
-          label="Password"
-          type="password"
-          variant="outlined"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          onClick={onLoginClick}
-        >
-          Login
-        </Button>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button type="submit">Login</button>
+    </form>
   );
-};
-
-export default LoginView;
+}

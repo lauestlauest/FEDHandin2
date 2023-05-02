@@ -1,34 +1,20 @@
-import "./App.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { AuthProvider } from "./auth/Auth";
 import LoginView from "./views/LoginView";
-// import { Managerview } from "./views/ManagerView";
-// import { ModelView } from "./views/ModelView";
-
-// Needs protected routes when login is implemented
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route path="/login" element={<LoginView />} />
-      {/* Manager Routes */}
-      {/* <Route path="/manager" element={<Managerview />} /> */}
-      {/* Model Routes */}
-      {/* <Route path="/model" element={<ModelView />} /> */}
-    </Route>
-  )
-);
+import UserView from "./views/UserView";
+import NotFound from "./views/NotFound";
 
 function App() {
   return (
-    <RouterProvider router={router}>
-      <div className="App">
-        <p>Hej Frontend</p>
-      </div>
-    </RouterProvider>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<UserView />} />
+          <Route path="/login" element={<LoginView />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 

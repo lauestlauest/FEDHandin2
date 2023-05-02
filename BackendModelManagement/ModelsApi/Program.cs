@@ -50,7 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "FED Assignment 2 Model Management API",
+        Title = "FED Assignment 2 Model Manegement API",
         Version = "v2",
         Description = "API to manage models."
     });
