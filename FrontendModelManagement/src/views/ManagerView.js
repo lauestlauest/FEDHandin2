@@ -1,6 +1,9 @@
 import { useAuth } from "../auth/Auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import {AddUserForm} from "../components/AddUserForm"
+import {AddJobForm} from "../components/AddJobForm";
+import {AddModelToJobForm} from "../components/AddModelToJobForm";
 
 // Needs:
 // List of all jobs
@@ -26,6 +29,9 @@ export default function ManagerView() {
         This is where you can manage all the jobs, add new ones, add models to
         jobs and create new users.
       </p>
+      <AddJobForm/>
+        <AddUserForm/>
+        <AddModelToJobForm/>
     </div>
   );
 }

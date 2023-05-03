@@ -34,6 +34,7 @@ export function AddUserForm() {
   if (job == 1){
   return (
     <div className='view'>
+      <h2>Create a new user</h2>
         <form onSubmit= {handleSubmit(onSubmit)}>  
 
         <select onChange={(event) => setjob(event.target.value)}>
@@ -65,6 +66,7 @@ export function AddUserForm() {
     return(
 
       <div className='view'>
+        <h2>Create a new user</h2>
         <form onSubmit= {handleSubmit(onSubmit)}>  
 
         <select onChange={(event) => setjob(event.target.value)} >
