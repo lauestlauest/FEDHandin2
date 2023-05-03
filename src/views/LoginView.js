@@ -1,7 +1,4 @@
-import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/Auth";
-import { authenticateUser } from "../auth/UserLogin";
+import { React, useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -14,31 +11,52 @@ import {
   Avatar,
   FormControlLabel,
   Checkbox,
-  // Link,
+  Link,
 } from "@mui/material";
-
+import jwtDecode from "jwt-decode";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { handleLogin, useAuth } from "../auth/Auth";
 import loginTheme from "../utils/LoginTheme";
-import ForgotPassword from "../components/ForgottenPassword";
+import { Navigate, useNavigate } from "react-router-dom";
 
-export default function LoginView() {
+const LoginView = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState(null);
-  const { login } = useAuth();
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const [roles, setRoles] = useState(null); // roles state
   const navigate = useNavigate();
 
-  async function onLoginClick(e) {
-    e.preventDefault();
-    const token = await authenticateUser(email, password);
-    if (token) {
-      login(token);
+  const onLoginClick = async () => {
+    // event.preventDefault();
+    try {
+      await handleLogin(email, password);
       setLoginStatus("success");
-      navigate("/"); // Navigate to the main page after successful login
-    } else {
+      // fetch user's roles again and update roles state
+      const token = localStorage.getItem("token");
+      const decodedToken = jwtDecode(token);
+      const userRoles =
+        decodedToken[
+          "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        ];
+      setRoles(userRoles);
+      if (userRoles === "model") {
+        console.log("Model logged in");
+        navigate("/model");
+      }
+    } catch (err) {
+      console.log(err.message);
       setLoginStatus("error");
+      throw err;
     }
-  }
+  };
+
+  // clear roles state when user logs out
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setRoles(null);
+    }
+  }, [isAuthenticated, setRoles]);
 
   return (
     <ThemeProvider theme={loginTheme}>
@@ -87,6 +105,7 @@ export default function LoginView() {
                 id="email"
                 label="Email Address"
                 name="email"
+                autoComplete="email"
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -99,6 +118,7 @@ export default function LoginView() {
                 label="Password"
                 type="password"
                 id="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -121,13 +141,15 @@ export default function LoginView() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <ForgotPassword />
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
                 </Grid>
-                {/* <Grid item>
+                <Grid item>
                   <Link href="#" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
-                </Grid> */}
+                </Grid>
               </Grid>
             </Box>
           </Box>
@@ -135,4 +157,6 @@ export default function LoginView() {
       </Grid>
     </ThemeProvider>
   );
-}
+};
+
+export default LoginView;
