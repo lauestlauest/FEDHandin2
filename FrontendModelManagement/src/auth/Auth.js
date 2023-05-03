@@ -15,7 +15,22 @@ export function AuthProvider({ children }) {
 
   const value = useMemo(() => {
     const token = localStorage.getItem("jwt");
-    if (token) {
+    const decodedToken = token ? jwtDecode(token) : null;
+    const user = decodedToken
+      ? {
+          email:
+            decodedToken[
+              "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+            ],
+          role: decodedToken[
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+          ],
+          modelId: decodedToken["ModelId"],
+        }
+      : null;
+
+    const login = (token) => {
+      localStorage.setItem("jwt", token);
       const decodedToken = jwtDecode(token);
       const user = {
         email:
@@ -27,62 +42,25 @@ export function AuthProvider({ children }) {
         ],
         modelId: decodedToken["ModelId"],
       };
-
       setCurrentUser(user);
+      localStorage.setItem("currentUser", JSON.stringify(user));
+    };
 
-      return {
-        currentUser: user,
-        login: (token) => {
-          localStorage.setItem("jwt", token);
-          const decodedToken = jwtDecode(token);
-          const user = {
-            email:
-              decodedToken[
-                "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
-              ],
-            role: decodedToken[
-              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-            ],
-            modelId: decodedToken["ModelId"],
-          };
-          setCurrentUser(user);
-          localStorage.setItem("currentUser", JSON.stringify(user));
-        },
-        logout: () => {
-          localStorage.removeItem("jwt");
-          localStorage.removeItem("currentUser");
-          setCurrentUser(null);
-          navigate("/login");
-        },
-      };
-    } else {
+    const logout = () => {
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("currentUser");
+      setCurrentUser(null);
       navigate("/login");
-      return {
-        currentUser: null,
-        login: (token) => {
-          localStorage.setItem("jwt", token);
-          const decodedToken = jwtDecode(token);
-          const user = {
-            email:
-              decodedToken[
-                "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
-              ],
-            role: decodedToken[
-              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
-            ],
-            modelId: decodedToken["ModelId"],
-          };
-          setCurrentUser(user);
-          localStorage.setItem("currentUser", JSON.stringify(user));
-        },
-        logout: () => {
-          localStorage.removeItem("jwt");
-          localStorage.removeItem("currentUser");
-          setCurrentUser(null);
-          navigate("/login");
-        },
-      };
+    };
+
+    if (!token) {
+      navigate("/login");
     }
+
+    setCurrentUser(user);
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
+    return { currentUser: user, login, logout };
   }, [navigate]);
 
   useEffect(() => {

@@ -3,6 +3,8 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 
+// Indsæt reference til hvor den er fundet
+
 export default function NotFound() {
   const navigate = useNavigate();
 

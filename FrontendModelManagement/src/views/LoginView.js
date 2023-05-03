@@ -87,6 +87,7 @@ export default function LoginView() {
                 id="email"
                 label="Email Address"
                 name="email"
+                autoComplete="current-email"
                 autoFocus
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -99,6 +100,7 @@ export default function LoginView() {
                 label="Password"
                 type="password"
                 id="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
