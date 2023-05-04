@@ -9,6 +9,7 @@ export function RemoveModelFromJobForm() {
   const [models, setModels] = useState([])
   const [jobId, setJobId] = useState(0)
   const [modelId, setModelId] = useState(0)
+  const [text, setText] = useState("")
    
 
 useEffect( () => {
@@ -29,9 +30,17 @@ useEffect( () => {
 
 
 
-const onSubmit = () => {
-    console.log("Jobs/${jobId}/models/"+ modelId)
-    deleteData("Jobs/" + jobId+ "/model/" + modelId)
+const onSubmit = async () => {
+    
+    try{
+      await deleteData("Jobs/" + jobId+ "/model/" + modelId)
+      setText("Sucess")
+    }
+    catch(error){
+      console.log(JSON.stringify(error));
+      setText("bad request")
+    }
+    
 }
 
 
@@ -52,14 +61,10 @@ const onSubmit = () => {
           placeholder="Model" />
           
         <input type="submit"/>
+        <p>{text}</p>
      </form>
 
     </div>
-
-
-
-
-
 
   );
 };

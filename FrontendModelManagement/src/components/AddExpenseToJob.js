@@ -32,7 +32,7 @@ export function AddExpenseToJob() {
 
   return (
     <div className='view'>
-      <h2>Remove Model from Job</h2>
+      <h2>Add expense to job</h2>
       <form onSubmit = {onSubmit}>
         <Select onChange={(event) => {expense.jobId =event.jobId}} options={jobs} 
           getOptionLabel={(options) => options.customer + ". jobId: " + options.jobId} 
