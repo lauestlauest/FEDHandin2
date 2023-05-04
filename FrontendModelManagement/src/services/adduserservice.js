@@ -6,18 +6,11 @@ import {postData} from "../services/apiservice"
 // Add new managers
 
 export function AddUserService(body,  IsManager){
-  // var user= {
-  //   firstName: {FirstName},
-  //   lastName: {Lastname},
-  //   email: {Email},
-  //   password: {Password}
-  // }
   return postData( postUrl(IsManager) , body)
-
 };
 
 const postUrl = (IsManager) => {
-  if (IsManager == true){
+  if (IsManager == 1){
     return 'Managers'
   }
   return 'Models'
