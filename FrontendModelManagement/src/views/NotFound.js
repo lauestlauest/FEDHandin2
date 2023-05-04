@@ -3,6 +3,9 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 
+// Source for the 404 page: https://frontendshape.com/post/react-mui-5-404-page-example
+// Example 3
+
 export default function NotFound() {
   const navigate = useNavigate();
 
