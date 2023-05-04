@@ -4,6 +4,9 @@ import { useEffect } from "react";
 import {AddUserForm} from "../components/AddUserForm"
 import {AddJobForm} from "../components/AddJobForm";
 import {AddModelToJobForm} from "../components/AddModelToJobForm";
+import {RemoveModelFromJobForm} from "../components/RemoveModelFromJobForm";
+import {ViewJobs} from "../components/ViewJobs";
+import {AddExpenseToJob} from "../components/AddExpenseToJob"
 
 // Needs:
 // List of all jobs
@@ -32,6 +35,10 @@ export default function ManagerView() {
       <AddJobForm/>
         <AddUserForm/>
         <AddModelToJobForm/>
+        <RemoveModelFromJobForm/>
+        <ViewJobs/>
+        <AddExpenseToJob/>
+
     </div>
   );
 }
