@@ -21,12 +21,12 @@ export function ViewJobs(endpoint) {
       <table className="audit table">
             <thead className="table-th">
                   <tr>
-                    <th>JobId</th>
-                    <th>customer</th>
-                    <th>startDate</th>
-                    <th>days</th>                
-                    <th>location</th>
-                    <th>comments</th>
+                    <th>Job Id</th>
+                    <th>Customer</th>
+                    <th>Start Date</th>
+                    <th>Days</th>                
+                    <th>Location</th>
+                    <th>Comments</th>
                   </tr>
                 </thead>
                 <tbody className="table-body">
