@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/BackendModelManagement/ModelsApi/Migrations/20230503094041_InitialSchema.Designer.cs
+/BackendModelManagement/ModelsApi/Migrations/ApplicationDbContextModelSnapshot.cs
+/BackendModelManagement/ModelsApi/Migrations/20230503094041_InitialSchema.cs

@@ -32,13 +32,11 @@ export default function ManagerView() {
         This is where you can manage all the jobs, add new ones, add models to
         jobs and create new users.
       </p>
-      <AddJobForm/>
+        <AddJobForm/>
         <AddUserForm/>
         <AddModelToJobForm/>
         <RemoveModelFromJobForm/>
         <ViewJobs/>
-        <AddExpenseToJob/>
-
     </div>
   );
 }
