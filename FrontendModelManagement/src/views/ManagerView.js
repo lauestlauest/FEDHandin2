@@ -6,7 +6,8 @@ import {AddJobForm} from "../components/AddJobForm";
 import {AddModelToJobForm} from "../components/AddModelToJobForm";
 import {RemoveModelFromJobForm} from "../components/RemoveModelFromJobForm";
 import {ViewJobs} from "../components/ViewJobs";
-import {AddExpenseToJob} from "../components/AddExpenseToJob"
+import { Button } from "@mui/material";
+
 
 // Needs:
 // List of all jobs
@@ -16,7 +17,7 @@ import {AddExpenseToJob} from "../components/AddExpenseToJob"
 // Create user component/view
 
 export default function ManagerView() {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function ManagerView() {
 
   return (
     <div>
+      <Button variant="contained" onClick={() => logout()}>Log out</Button>
       <h1>Welcome to ManagerView</h1>
       <p>
         This is where you can manage all the jobs, add new ones, add models to
