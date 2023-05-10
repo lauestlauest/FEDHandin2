@@ -6,12 +6,10 @@ import {AddUserService} from "../services/adduserservice"
 
 
 export function AddUserForm() {
-
-   const {register, handleSubmit, unregister} = useForm({ shouldUseNativeValidation: true });
+  const {register, handleSubmit, unregister} = useForm({ shouldUseNativeValidation: true });
    
-   const [job , setjob] = useState(1);
+  const [job , setjob] = useState(1);
    
-
   const onSubmit = async (data) => {
     console.log(JSON.stringify(data))
     AddUserService( data, job)
@@ -19,7 +17,7 @@ export function AddUserForm() {
 
   useEffect(() => {
     document.title = `job number is ${job}`; //for testing
-    if(job== 1){
+    if(job === 1){
     unregister(['phoneNo', 'addresLine1'
           , 'addresLine2', 'zip' 
           , 'city' , 'country' 
@@ -30,37 +28,36 @@ export function AddUserForm() {
     }
   },[job]);
  
+  if (job === 1){
+    return (
+      <div className='view'>
+        <h2>Create a new user</h2>
+          <form onSubmit= {handleSubmit(onSubmit)}>  
+
+          <select onChange={(event) => setjob(event.target.value)}>
+              <option value='1' >Manager</option>
+              <option value='0'>Model</option>
+          </select>
+          <br/>
+            
+          <input {...register("firstName")} placeholder="First name"/>
+            <br/>
     
-  if (job == 1){
-  return (
-    <div className='view'>
-      <h2>Create a new user</h2>
-        <form onSubmit= {handleSubmit(onSubmit)}>  
+          <input {...register("lastName", { required: true })} placeholder="Last name" />
+            <br/>
 
-        <select onChange={(event) => setjob(event.target.value)}>
-            <option value='1' >Manager</option>
-            <option value='0'>Model</option>
-        </select>
-         <br/>
-          
-        <input {...register("firstName")} placeholder="First name"/>
-          <br/>
-  
-        <input {...register("lastName", { required: true })} placeholder="Last name" />
-          <br/>
+          <input {...register("email", { required: true })} type="email" placeholder="Email"/>
+            <br/>
 
-        <input {...register("email", { required: true })} type="email" placeholder="Email"/>
-          <br/>
+          <input {...register("password", { required: true })} type="Password" placeholder="Password"/>
+            <br/>
 
-        <input {...register("password", { required: true })} type="Password" placeholder="Password"/>
-          <br/>
+        
 
-       
-
-          <input type="submit"/>
-        </form>
-    </div>
-  );
+            <input type="submit"/>
+          </form>
+      </div>
+    );
   }
   else{
     return(

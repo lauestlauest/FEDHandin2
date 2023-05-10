@@ -8,14 +8,6 @@ import {RemoveModelFromJobForm} from "../components/RemoveModelFromJobForm";
 import {ViewJobs} from "../components/ViewJobs";
 import { Button } from "@mui/material";
 
-
-// Needs:
-// List of all jobs
-// Create new job component
-// Add model(s) to job component/view
-// Delete model(s) component/view - checkbox with a button maybe
-// Create user component/view
-
 export default function ManagerView() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();

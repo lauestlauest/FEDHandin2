@@ -4,10 +4,6 @@ import { useAuth } from "../auth/Auth";
 import React from "react";
 import { Button } from "@mui/material";
 
-// Needs:
-// View of all assigned jobs
-// Add expenses to a job button - opens a form/component. Maybe a view.
-
 const ModelView = () => {
   const { logout } = useAuth();
   return (

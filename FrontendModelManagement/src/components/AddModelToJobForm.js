@@ -23,18 +23,11 @@ useEffect( () => {
     getjobs();
     getmodels();
 
-},[]);
+  },[]);
 
-
-
-
-
-const onSubmit = () => {
-    console.log("Jobs/${jobId}/models/"+ modelId)
-    postData("Jobs/" + jobId+ "/model/" + modelId)
-}
-
-
+  const onSubmit = () => {
+      postData("Jobs/" + jobId+ "/model/" + modelId)
+  }
 
   return (
 
@@ -55,11 +48,5 @@ const onSubmit = () => {
      </form>
 
     </div>
-
-
-
-
-
-
   );
 };

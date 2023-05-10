@@ -11,7 +11,6 @@ export function RemoveModelFromJobForm() {
   const [modelId, setModelId] = useState(0)
   const [text, setText] = useState("")
    
-
 useEffect( () => {
     const getjobs = async () =>{
       const data = await getData("Jobs")
@@ -26,12 +25,7 @@ useEffect( () => {
 
 },[]);
 
-
-
-
-
 const onSubmit = async () => {
-    
     try{
       await deleteData("Jobs/" + jobId+ "/model/" + modelId)
       setText("Sucess")
@@ -40,13 +34,9 @@ const onSubmit = async () => {
       console.log(JSON.stringify(error));
       setText("bad request")
     }
-    
 }
 
-
-
   return (
-
     <div className='view'>
       <h2>Remove Model from Job</h2>
       <form onSubmit = {onSubmit}>
@@ -65,6 +55,5 @@ const onSubmit = async () => {
      </form>
 
     </div>
-
   );
 };

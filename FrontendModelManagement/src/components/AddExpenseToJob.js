@@ -3,7 +3,6 @@ import { useState , useEffect } from "react";
 import {postData , getData} from "../services/apiservice" 
 import Select from "react-select";
 
-
 export function AddExpenseToJob() {
   const [expense, setExpense] = useState({modelId : "", jobId : "", date : "", text : "", amount : "" });
   const [jobs, setJobs] = useState([])

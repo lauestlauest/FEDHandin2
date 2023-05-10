@@ -10,8 +10,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
-  // eslint-disable-next-line
-  const [currentUser, setCurrentUser] = useState(null);
+  const [, setCurrentUser] = useState(null);
 
   const value = useMemo(() => {
     const token = localStorage.getItem("jwt");
